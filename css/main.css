@@ -1232,7 +1232,7 @@ img:hover {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff82ff;
+  background: #63ff0f;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1480,6 +1480,9 @@ img:hover {
   .container .footer-inner {
     width: 73%;
   }
+}
+#animate {
+  animation: iconAnimate 1.33s ease-in-out infinite;
 }
 .with-love {
   color: #808080;
