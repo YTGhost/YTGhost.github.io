@@ -8,9 +8,23 @@
       <link href="/2019/10/11/%E5%85%B3%E4%BA%8EBigDecimal%E7%B1%BB%E4%BD%BF%E7%94%A8%E7%9A%84%E6%B3%A8%E6%84%8F/"/>
       <url>/2019/10/11/%E5%85%B3%E4%BA%8EBigDecimal%E7%B1%BB%E4%BD%BF%E7%94%A8%E7%9A%84%E6%B3%A8%E6%84%8F/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p>我们都知道像float、double这两种基本浮点类型的浮点数容易引起精度丢失。为了能精确表示、计算浮点数，Java提供了BigDecimal类。但在它使用时有些地方需要注意。</p><a id="more"></a><h2 id="使用基于String的构造器"><a href="#使用基于String的构造器" class="headerlink" title="使用基于String的构造器"></a>使用基于String的构造器</h2><p>查看BigDecimal类的BigDecimal(double val)构造器的详细说明时，可以看到不推荐使用该构造器的说明，主要是因为使用该构造器时有一定的不可预知性。当程序使用new BigDecimal(0.1)来创建一个BigDecimal对象时，它的值并不是0.1，它实际上等于一个<strong>近似0.1</strong>的数。这是因为0.1无法准确地表示为double浮点数，所以传入BigDecimal构造器的值不会正好等于0.1（虽然表面上等于该值）。</p><p>但是我们可以使用BigDecimal(String val)构造器来构建，写入new BigDecimal(“0.1”)将创建一个BigDecimal，它将正好等于预期的0.1。因此通常建议优先使用基于String的构造器。</p><h2 id="使用valueOf方法"><a href="#使用valueOf方法" class="headerlink" title="使用valueOf方法"></a>使用valueOf方法</h2><p>但是如果必须使用double浮点数作为BigDecimal构造器的参数时，不要直接将该double浮点数作为构造器参数创建BigDecimal对象，而是应该通过<strong>BigDecimal.valueOf</strong>(double value)静态方法来创建BigDecimal对象。</p><p>其实我们通过查看valueOf方法源码可以看到：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BigDecimal <span class="title">valueOf</span><span class="params">(<span class="keyword">double</span> val)</span> </span>&#123;    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> BigDecimal(Double.toString(val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这个方法其实就是用了我们刚才讲的基于String的构造器。</p>]]></content>
       
       
+      <categories>
+          
+          <category> Java </category>
+          
+          <category> 基础语法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
       
     </entry>
     

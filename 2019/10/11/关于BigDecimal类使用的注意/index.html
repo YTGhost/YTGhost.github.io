@@ -58,14 +58,18 @@
   };
 </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="我们都知道像float、double这两种基本浮点类型的浮点数容易引起精度丢失。为了能精确表示、计算浮点数，Java提供了BigDecimal类。但在它使用时有些地方需要注意。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
 <meta property="og:title" content="关于BigDecimal类使用的注意">
 <meta property="og:url" content="http://www.hihia.top/2019/10/11/关于BigDecimal类使用的注意/index.html">
 <meta property="og:site_name" content="HIHIA的个人博客">
+<meta property="og:description" content="我们都知道像float、double这两种基本浮点类型的浮点数容易引起精度丢失。为了能精确表示、计算浮点数，Java提供了BigDecimal类。但在它使用时有些地方需要注意。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-11T15:52:22.877Z">
+<meta property="og:updated_time" content="2019-10-11T15:55:55.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于BigDecimal类使用的注意">
+<meta name="twitter:description" content="我们都知道像float、double这两种基本浮点类型的浮点数容易引起精度丢失。为了能精确表示、计算浮点数，Java提供了BigDecimal类。但在它使用时有些地方需要注意。">
   <link rel="canonical" href="http://www.hihia.top/2019/10/11/关于BigDecimal类使用的注意/">
 
 
@@ -268,7 +272,31 @@
                 
               
 
-              <time title="创建时间：2019-10-11 23:52:22" itemprop="dateCreated datePublished" datetime="2019-10-11T23:52:22+08:00">2019-10-11</time>
+              <time title="创建时间：2019-10-11 23:52:22 / 修改时间：23:55:55" itemprop="dateCreated datePublished" datetime="2019-10-11T23:52:22+08:00">2019-10-11</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/基础语法/" itemprop="url" rel="index"><span itemprop="name">基础语法</span></a></span>
+
+                
+                
+              
             </span>
           
 
@@ -304,7 +332,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>0</span>
+              <span>741</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -327,7 +355,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>我们都知道像float、double这两种基本浮点类型的浮点数容易引起精度丢失。为了能精确表示、计算浮点数，Java提供了BigDecimal类。但在它使用时有些地方需要注意。</p>
+<a id="more"></a>
+<h2 id="使用基于String的构造器"><a href="#使用基于String的构造器" class="headerlink" title="使用基于String的构造器"></a>使用基于String的构造器</h2><p>查看BigDecimal类的BigDecimal(double val)构造器的详细说明时，可以看到不推荐使用该构造器的说明，主要是因为使用该构造器时有一定的不可预知性。当程序使用new BigDecimal(0.1)来创建一个BigDecimal对象时，它的值并不是0.1，它实际上等于一个<strong>近似0.1</strong>的数。这是因为0.1无法准确地表示为double浮点数，所以传入BigDecimal构造器的值不会正好等于0.1（虽然表面上等于该值）。</p>
+<p>但是我们可以使用BigDecimal(String val)构造器来构建，写入new BigDecimal(“0.1”)将创建一个BigDecimal，它将正好等于预期的0.1。因此通常建议优先使用基于String的构造器。</p>
+<h2 id="使用valueOf方法"><a href="#使用valueOf方法" class="headerlink" title="使用valueOf方法"></a>使用valueOf方法</h2><p>但是如果必须使用double浮点数作为BigDecimal构造器的参数时，不要直接将该double浮点数作为构造器参数创建BigDecimal对象，而是应该通过<strong>BigDecimal.valueOf</strong>(double value)静态方法来创建BigDecimal对象。</p>
+<p>其实我们通过查看valueOf方法源码可以看到：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BigDecimal <span class="title">valueOf</span><span class="params">(<span class="keyword">double</span> val)</span> </span>&#123;    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> BigDecimal(Double.toString(val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法其实就是用了我们刚才讲的基于String的构造器。</p>
+
     </div>
 
     
@@ -361,6 +398,15 @@
       
     </div>
       <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Java/" rel="tag"># Java</a>
+            
+          </div>
+        
 
         
 
@@ -424,6 +470,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用基于String的构造器"><span class="nav-number">1.</span> <span class="nav-text">使用基于String的构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用valueOf方法"><span class="nav-number">2.</span> <span class="nav-text">使用valueOf方法</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -509,7 +557,7 @@
           <h3 class="widget-title">Tag Cloud</h3>
           <div id="myCanvasContainer" class="widget tagcloud">
               <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer-Version/">Computer Version</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li></ul>
+                  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer-Version/">Computer Version</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li></ul>
               </canvas>
           </div>
         </div>
@@ -539,7 +587,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2 分钟</span>
+    <span title="站点阅读时长">3 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
